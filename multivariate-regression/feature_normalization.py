@@ -45,11 +45,3 @@ def featureNormalize(X):
         X_norm[:, feature] = (X[:, feature] - mu[feature]) / sigma[feature]
     return X_norm, mu, sigma
 
-
-X_norm, mu, sigma = featureNormalize(housing_data)
-
-print('Computed mean:', mu)
-print('Computed standard deviation:', sigma)
-
-# now we add the intercept term to housing_data
-housing_data = np.concatenate([np.ones((data_length, 1)), X_norm], axis=1)  # adds row of 1s to first column of X_norm
