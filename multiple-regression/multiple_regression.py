@@ -5,6 +5,9 @@ from load_data import load_data
 
 # Linear regression with multiple variables - predicting housing prices
 
+
+# Load Data
+
 filename = 'housing_data.txt'
 x, y, size = load_data(filename)
 
