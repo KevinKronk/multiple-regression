@@ -1,6 +1,15 @@
+# import numpy as np
+# import pandas as pd
+from load_data import load_data
+
+
 # Linear regression with multiple variables - predicting housing prices
 
+filename = 'housing_data.txt'
+x, y, size = load_data(filename)
 
+
+'''
 X_norm, mu, sigma = featureNormalize(housing_data)
 
 print('Computed mean:', mu)
@@ -39,3 +48,5 @@ f2 = (3-mu[1])/sigma[1]
 f3 = (np.dot([1, f1, f2], new_theta2))
 predict3 = float(f3*sigma[2])+mu[2]
 print("Predicted price of a 1650 sq-ft, 3 bed room house: ${:.0f}".format(predict3))
+
+'''
