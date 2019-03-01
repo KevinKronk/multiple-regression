@@ -11,7 +11,6 @@ from load_data import load_data
 filename = 'housing_data.txt'
 x, y, size = load_data(filename)
 
-
 '''
 X_norm, mu, sigma = featureNormalize(housing_data)
 
