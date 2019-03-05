@@ -1,7 +1,8 @@
 # Feature Normalization
+import numpy as np
 
 
-def featureNormalize(X):
+def feature_normalize(x):
     """
     Normalizes the features in X. returns a normalized version of X where
     the mean value of each feature is 0 and the standard deviation
@@ -34,14 +35,14 @@ def featureNormalize(X):
     You might find the 'np.mean' and 'np.std' functions useful.
     """
     # You need to set these values correctly
-    X_norm = X.copy()
-    mu = np.zeros(X.shape[1])
-    sigma = np.zeros(X.shape[1])
+    x_norm = x.copy()
+    mu = np.zeros(x.shape[1])
+    sigma = np.zeros(x.shape[1])
 
-    features = X.shape[1]
+    features = x.shape[1]
     for feature in range(features):
-        mu[feature] = np.mean(X[:, feature])
-        sigma[feature] = np.std(X[:, feature])
-        X_norm[:, feature] = (X[:, feature] - mu[feature]) / sigma[feature]
-    return X_norm, mu, sigma
+        mu[feature] = np.mean(x.iloc[:, feature])
+        sigma[feature] = np.std(x.iloc[:, feature])
+        x_norm.iloc[:, feature] = (x.iloc[:, feature] - mu[feature]) / sigma[feature]
+    return x_norm, mu, sigma
 
