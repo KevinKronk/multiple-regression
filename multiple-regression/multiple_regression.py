@@ -1,4 +1,4 @@
-# import numpy as np
+import numpy as np
 # import pandas as pd
 from load_data import load_data
 from feature_normalization import feature_normalize
@@ -10,21 +10,23 @@ from feature_normalization import feature_normalize
 # Load Data
 
 filename = 'housing_data.txt'
-housing_data, housing_prices, size = load_data(filename)
-
+housing_data = load_data(filename)
+print(housing_data)
 
 # Feature Normalization
 
-x_norm, mu, sigma = feature_normalize(housing_data)
+housing_data = (housing_data - housing_data.mean()) / housing_data.std()
+print(housing_data)
 
-print('Computed mean:', mu)
-print('Computed standard deviation:', sigma)
+# Feature Normalization
+
+# x_norm, mu, sigma = feature_normalize(housing_data, size)
+#
+# print('Computed mean:', mu)
+# print('Computed standard deviation:', sigma)
+
 
 '''
-
-# now we add the intercept term to housing_data
-housing_data = np.concatenate([np.ones((data_length, 1)), X_norm], axis=1)
-# adds row of 1s to first column of X_norm
 
 multi_J = computeCostMulti(housing_features, housing_prices, theta=np.array([[0], [0], [0]]))
 

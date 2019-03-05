@@ -1,8 +1,9 @@
 # Feature Normalization
 import numpy as np
+import pandas as pd
 
 
-def feature_normalize(x):
+def feature_normalize(x, size):
     """
     Normalizes the features in X. returns a normalized version of X where
     the mean value of each feature is 0 and the standard deviation
@@ -44,5 +45,14 @@ def feature_normalize(x):
         mu[feature] = np.mean(x.iloc[:, feature])
         sigma[feature] = np.std(x.iloc[:, feature])
         x_norm.iloc[:, feature] = (x.iloc[:, feature] - mu[feature]) / sigma[feature]
+
+    # now we add the intercept term to housing_data
+
+
+    intercept = pd.DataFrame(np.ones(size, 1))
+    x_norm.join(intercept)
+    #  x_norm = np.concatenate([np.ones((size, 1)), x_norm], axis=1)
+    # adds row of 1s to first column of X_norm
+
     return x_norm, mu, sigma
 
