@@ -1,7 +1,6 @@
 import numpy as np
 # import pandas as pd
 from load_data import load_data
-from feature_normalization import feature_normalize
 
 
 # Linear regression with multiple variables - predicting housing prices
@@ -24,6 +23,14 @@ print(housing_data)
 #
 # print('Computed mean:', mu)
 # print('Computed standard deviation:', sigma)
+
+# now we add the intercept term to housing_data
+
+
+intercept = pd.DataFrame(np.ones(size, 1))
+x_norm.join(intercept)
+#  x_norm = np.concatenate([np.ones((size, 1)), x_norm], axis=1)
+# adds row of 1s to first column of X_norm
 
 
 '''
