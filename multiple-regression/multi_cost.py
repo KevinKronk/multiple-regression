@@ -1,10 +1,8 @@
+import numpy as np
 # Cost Function for multiple variables
-housing_features = housing_data[:, :3]
-housing_prices = housing_data[:, 3]
-housing_prices = housing_prices[:, None]
-data_length = housing_prices.size
 
-def computeCostMulti(X, y, theta):
+
+def multi_cost(x, y, theta):
     """
     Compute cost for linear regression with multiple variables.
     Computes the cost of using theta as the parameter for linear regression to fit the data points in X and y.
@@ -29,9 +27,7 @@ def computeCostMulti(X, y, theta):
     ------------
     Compute the cost of a particular choice of theta. You should set J to the cost.
     """
-    m = y.shape[0]  # number of training examples
+    size = y.shape[0]  # number of training examples
 
-    first = (np.dot(X, theta) - y).T
-    second = (np.dot(X, theta) - y)
-    cost = np.sum((1/(2*m))*(np.dot(first, second)))
+    cost = np.sum((1 / (2 * size)) * (((np.dot(x, theta.T)) - y) ** 2))
     return cost

@@ -1,11 +1,15 @@
-def gradientDescentMulti(X, y, theta, alpha, num_iters):
+import numpy as np
+from multi_cost import multi_cost
+
+
+def gradient_descent(x, y, theta, alpha, iters):
     """
     Performs gradient descent to learn theta.
     Updates theta by taking num_iters gradient steps with learning rate alpha.
 
     Parameters
     ----------
-    X : array_like
+    x : array_like
         The dataset of shape (m x n+1).
 
     y : array_like
@@ -36,19 +40,24 @@ def gradientDescentMulti(X, y, theta, alpha, num_iters):
     the cost function (computeCost) and gradient here.
     """
     # Initialize some useful values
-    m = y.shape[0]  # number of training examples
+    size = y.shape[0]  # number of training examples
 
     # make a copy of theta, which will be updated by gradient descent
-    theta = theta.copy()
+    parameters = x.shape[1]
+    temp = np.zeros((1, parameters))
+    cost_history = np.zeros(iters)
 
-    J_history = []
+    for i in range(iters):
 
-    for i in range(num_iters):
-        temp_J = computeCostMulti(X, y, theta)
-        J_history.append(temp_J)
-        delta = (1/m)*((np.dot(X, theta))-y)*X
-        delta2 = np.array(delta.sum(axis=0))
-        delta3 = delta2.reshape(-1, 1)
-        theta = (theta - (alpha*delta3))
-        i += 1
-    return theta, J_history
+        error = (1 / size) * ((np.dot(x, theta.T)) - y)
+
+        for parameter in range(parameters):
+            delta = error * x[:, [parameter]]
+
+            temp[0, parameter] = theta[0, parameter] - (alpha * delta.sum())
+
+        # delta2 = delta.sum(axis=1, keepdims=True)
+        theta = temp
+        cost_history[i] = multi_cost(x, y, theta)  # misses the last theta update
+
+    return theta, cost_history
