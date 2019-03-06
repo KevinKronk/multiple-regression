@@ -1,19 +1,26 @@
-# reloading data
-housing_data = np.loadtxt(os.path.join('/Users/kevkr/Desktop/Data_Folder', 'ex1data2.txt'), delimiter=',')
-housing_features = housing_data[:, :2]
-housing_prices = housing_data[:, 2]
-housing_prices = np.reshape(housing_prices, (-1, 1))
-data_length = housing_prices.size
-housing_features = np.concatenate([np.ones((data_length, 1)), housing_features], axis=1)
+import numpy as np
+from load_data import load_data
 
 
-def normalEqn(X, y):
+filename = 'housing_data.txt'
+housing_data = load_data(filename)
+
+housing_data.insert(0, 'Ones', 1)
+cols = housing_data.shape[1]
+x = housing_data.iloc[:, 0:cols-1]
+y = housing_data.iloc[:, cols-1:cols]  # why do I need the :cols
+
+x = x.values
+y = y.values
+
+
+def normal_equation(x, y):
     """
     Computes the closed-form solution to linear regression using the normal equations.
 
     Parameters
     ----------
-    X : array_like
+    x : array_like
         The dataset of shape (m x n+1).
 
     y : array_like
@@ -31,12 +38,13 @@ def normalEqn(X, y):
     """
     # theta = np.zeros(X.shape[1])
 
-    norm_theta = (np.linalg.pinv(X.T @ X) @ X.T) @ y
+    norm_theta = (np.linalg.pinv(x.T @ x) @ x.T) @ y
     return norm_theta
 
 
-normal_theta = normalEqn(housing_features, housing_prices)
-print(normal_theta)
+theta = normal_equation(x, y)
+print(theta)
 
-predict4 = float(np.dot([1, 1650, 3], normal_theta))
-print("Predicted price of a 1650 sq-ft, 3 bed room house: ${:.0f}".format(predict4))
+new_house = np.array([1, 1650, 3])
+new_price = new_house @ theta
+print(new_price)

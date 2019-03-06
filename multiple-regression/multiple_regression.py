@@ -47,7 +47,6 @@ cost = multi_cost(x, y, theta)
 
 theta, cost_history = gradient_descent(x, y, theta, alpha, iterations)
 print(theta)
-print(cost_history)
 
 
 fig, ax = plt.subplots(figsize=(10, 6))
