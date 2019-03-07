@@ -1,7 +1,7 @@
-import numpy as np
-import pandas as pd
-from load_data import load_data
 import matplotlib.pyplot as plt
+import numpy as np
+
+from load_data import load_data
 from multi_cost import multi_cost
 from multi_gradient import gradient_descent
 from prediction import predict_price
@@ -15,39 +15,50 @@ from prediction import predict_price
 filename = 'housing_data.txt'
 housing_data = load_data(filename)
 
-alpha = 0.01
-iterations = 1000
 
 # Feature Normalization
+
+# store the means and standard deviations for predictions
 means = housing_data.mean()
 stds = housing_data.std()
 
 housing_data = (housing_data - housing_data.mean()) / housing_data.std()
 
 
-# Inserting Intercept parameter
+# Inserting intercept parameter
 
 housing_data.insert(0, 'Ones', 1)
 
 
-# Converting Pandas dataframe to necessary numpy arrays
+# Convert pandas dataframe to numpy arrays
 
 cols = housing_data.shape[1]
 
 x = housing_data.iloc[:, 0:cols-1]
-y = housing_data.iloc[:, cols-1:cols]  # why do I need the :cols
+y = housing_data.iloc[:, cols-1:cols]
 
 x = x.values
 y = y.values
+
+
+# Set initial values
+
+alpha = 0.01
+iterations = 1000
 theta = np.array([[0, 0, 0]])
 
+
+# Cost Function
 
 cost = multi_cost(x, y, theta)
 
 
-theta, cost_history = gradient_descent(x, y, theta, alpha, iterations)
-print(theta)
+# Gradient Descent
 
+new_theta, cost_history = gradient_descent(x, y, theta, alpha, iterations)
+
+
+# Plotting Data
 
 fig, ax = plt.subplots(figsize=(10, 6))
 ax.plot(list(range(iterations)), cost_history, 'r')
@@ -59,17 +70,7 @@ plt.show()
 
 # Prediction
 
-pprice = predict_price(1650, 3, means, stds, theta)
-print(pprice)
-
-'''
-
-
-# make a prediction for a 1650 sq-ft, 3 br house
-f1 = 1650
-f2 = 3
-f3 = (np.dot([1, f1, f2], new_theta2))
-predict3 = float(f3*sigma[2])+mu[2]
-print("Predicted price of a 1650 sq-ft, 3 bed room house: ${:.0f}".format(predict3))
-
-'''
+sq_feet = 1650
+bedrooms = 3
+new_price = predict_price(sq_feet, bedrooms, means, stds, new_theta)
+print(f"The price for a {bedrooms} bedroom, {sq_feet} sq foot house is:\n${int(new_price)}")
