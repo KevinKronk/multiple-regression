@@ -1,63 +1,55 @@
 import numpy as np
+
 from multi_cost import multi_cost
 
 
-def gradient_descent(x, y, theta, alpha, iters):
+def gradient_descent(x, y, theta, alpha, iterations):
     """
-    Performs gradient descent to learn theta.
-    Updates theta by taking num_iters gradient steps with learning rate alpha.
+        Performs gradient descent to optimize the 'theta' parameters. Updates theta for a total of
+        inputted 'iterations', with a learning rate 'alpha'.
 
-    Parameters
-    ----------
-    x : array_like
-        The dataset of shape (m x n+1).
+        Parameters
+        ----------
+        x : array_like
+            Shape (m, n+1), where m is the number of examples, and n+1 the number of features
+            including the vector of ones for the zeroth parameter.
 
-    y : array_like
-        A vector of shape (m, ) for the values at a given data point.
+        y : array_like
+            Shape (m, 1), where m is the value of the function at each point.
 
-    theta : array_like
-        The linear regression parameters. A vector of shape (n+1, )
+        theta : array_like
+            Shape (1, n+1). The multiple regression parameters.
 
-    alpha : float
-        The learning rate for gradient descent.
+        alpha : float
+            The learning rate.
 
-    num_iters : int
-        The number of iterations to run gradient descent.
+        iterations : int
+            The number of iterations for gradient descent.
 
-    Returns
-    -------
-    theta : array_like
-        The learned linear regression parameters. A vector of shape (n+1, ).
+        Returns
+        -------
+        theta : array_like
+            Shape (1, n+1). The learned multiple regression parameters.
 
-    J_history : list
-        A python list for the values of the cost function after each iteration.
-
-    Instructions
-    ------------
-    Perform a single gradient step on the parameter vector theta.
-
-    While debugging, it can be useful to print out the values of
-    the cost function (computeCost) and gradient here.
+        cost_history : list
+            A list of the values from the cost function after each iteration.
     """
-    # Initialize some useful values
-    size = y.shape[0]  # number of training examples
 
-    # make a copy of theta, which will be updated by gradient descent
+    # Create temporary array for updating theta
+    size = y.shape[0]
     parameters = x.shape[1]
     temp = np.zeros((1, parameters))
-    cost_history = np.zeros(iters)
+    cost_history = np.zeros(iterations)
 
-    for i in range(iters):
+    for iteration in range(iterations):
 
-        error = (1 / size) * ((np.dot(x, theta.T)) - y)
+        error = (1 / size) * ((x @ theta.T) - y)
 
         for parameter in range(parameters):
             delta = error * x[:, [parameter]]
-
             temp[0, parameter] = theta[0, parameter] - (alpha * delta.sum())
 
-        # delta2 = delta.sum(axis=1, keepdims=True)
         theta = temp
-        cost_history[i] = multi_cost(x, y, theta)  # misses the last theta update
+        cost_history[iteration] = multi_cost(x, y, theta)
 
     return theta, cost_history

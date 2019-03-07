@@ -30,7 +30,7 @@ housing_data = (housing_data - housing_data.mean()) / housing_data.std()
 housing_data.insert(0, 'Ones', 1)
 
 
-# Convert pandas dataframe to numpy arrays
+# Convert pandas DataFrame to numpy arrays
 
 cols = housing_data.shape[1]
 
@@ -43,7 +43,7 @@ y = y.values
 
 # Set initial values
 
-alpha = 0.01
+alpha = 0.03
 iterations = 1000
 theta = np.array([[0, 0, 0]])
 
@@ -72,5 +72,5 @@ plt.show()
 
 sq_feet = 1650
 bedrooms = 3
-new_price = predict_price(sq_feet, bedrooms, means, stds, new_theta)
-print(f"The price for a {bedrooms} bedroom, {sq_feet} sq foot house is:\n${int(new_price)}")
+new_price = predict_price(sq_feet, bedrooms, new_theta, means, stds)
+print(f"The price for a {bedrooms} bedroom, {sq_feet} sq foot house is:\n\t${new_price}")

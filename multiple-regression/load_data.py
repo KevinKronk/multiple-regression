@@ -2,12 +2,8 @@ import pandas as pd
 
 
 def load_data(filename):
-    """ Loads a csv file with two or more columns. """
+    """ Loads a csv file with one or more features into a DataFrame. """
 
     df = pd.read_csv(filename)
-    # x = df.iloc[:, [0, 1]]
-    # y = df.iloc[:, 2]
-    # size = y.size
 
     return df
-
